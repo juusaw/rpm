@@ -1,0 +1,7 @@
+{
+  "name": "RPM Calibrate",
+  "short_name": "RPM",
+  "start_url": "index.html",
+  "display": "standalone",
+  "icons": []
+}

@@ -1,0 +1,30 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="manifest" href="/manifest.json">
+  <title>RPM calibrate</title>
+  <meta name="description" content="Calibrate your record player with a mobile phone gyroscope">
+  <meta name="theme-color" content="#TODO">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Red+Rose&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="record.css" />
+</head>
+<body>
+  <div class="record-container">
+    <div class="record">
+      <div class="record-grain"></div>
+      <div class="record-center"></div>
+    </div>
+
+    <p>Rotation speed is</p>
+    <p><b id="rpm">0</b> RPM</p>
+    <button id="start">Start</button>
+    <button id="finish">Finish</button>
+    <p>Deviation from 33⅓ RPM is <span id="deviation">0</span> %</p>
+  </div>
+</body>
+<script src="main.js"></script>
+</html>
