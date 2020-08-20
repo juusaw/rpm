@@ -5,10 +5,10 @@ body {
   color: #444;
 }
 
-/* .animated .record {
-  animation: spin-partial 0.5s ease-in-out infinite alternate,
-    MoveUpDown 0.75s ease-in infinite;
-} */
+.animated .record {
+  animation: spin-partial 0.5s ease-in-out infinite alternate;
+  /* MoveUpDown 0.75s ease-in infinite; */
+}
 
 .animated .record-center,
 .animated .record-grain {
