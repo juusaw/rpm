@@ -1,8 +1,10 @@
 body {
-  text-align: center;
   background-color: #fff;
-  font-family: "Red Rose", cursive;
-  color: #444;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  color: #000;
+  transition: color 1s, background-color 1s;
+  font-variant-numeric: tabular-nums;
 }
 
 .animated .record {
@@ -12,22 +14,18 @@ body {
 
 .animated .record-center,
 .animated .record-grain {
-  animation: spin 4s linear infinite;
+  animation: spin 2s ease-in 1, spin 1.5s linear 2s infinite;
 }
 
 .record-container {
   display: inline-block;
   overflow: hidden;
-  width: calc(100% - 16px);
-  margin: 8px;
-  min-width: 350px;
-  max-width: 450px;
-  height: calc(100% - 16px);
-  min-height: 500px;
-  max-height: 600px;
-  border-radius: 10px;
-  box-shadow: 0 6px #99907e;
-  background-color: #f3f1ec;
+
+  position: absolute;
+  top: 50%; /* position the top  edge of the element at the middle of the parent */
+  left: 50%; /* position the left edge of the element at the middle of the parent */
+
+  transform: translate(-50%, -50%);
 }
 .record {
   position: relative;
@@ -59,6 +57,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
+  text-align: center;
   margin: -35px;
   border: solid 1px #d9a388;
   width: 68px;
@@ -109,8 +108,81 @@ body {
   }
 }
 
-button {
-  border: none;
-  background-color: #f5c249;
-  text-transform: uppercase;
+section h1 {
+  text-align: left;
+  font-size: 34px;
+  margin: 0;
+}
+section.top {
+  top: 0;
+}
+section.bottom {
+  bottom: 0;
+}
+section.left {
+  left: 0;
+}
+section.right {
+  right: 0;
+  text-align: right;
+}
+
+.info {
+  bottom: 0;
+  left: 0;
+  text-align: left;
+}
+.data {
+  top: 0;
+  right: 0;
+  text-align: right;
+}
+
+section {
+  max-width: 40%;
+  position: absolute;
+  padding: 1rem;
+}
+
+p {
+  margin: 0;
+}
+
+b {
+  font-size: 24px;
+}
+
+.mode:after {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  content: "\263E";
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #fff;
+    background-color: #000;
+  }
+  .mode:after {
+    content: "\2600";
+  }
+}
+
+body.lightmode {
+  color: #000;
+  background-color: #fff;
+}
+
+body.darkmode {
+  color: #fff;
+  background-color: #000;
+}
+
+.lightmode .mode:after {
+  content: "\263E";
+}
+
+.darkmode .mode:after {
+  content: "\2600";
 }

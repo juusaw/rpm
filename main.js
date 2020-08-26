@@ -13,7 +13,8 @@ function throttleFunction(fn, wait) {
 
 const targetRpm = 33.33333333;
 let samples = 0,
-  meanRotation = 0;
+  meanRotation = 0,
+  running = false;
 
 const onDeviceMotion = throttleFunction((evt) => {
   meanRotation =
@@ -28,22 +29,25 @@ const onDeviceMotion = throttleFunction((evt) => {
   document.getElementById("rpm").innerHTML = rpm.toFixed(2);
   document.getElementById("deviation").innerHTML =
     100 *
-    Math.abs(1 - Math.min(rpm, targetRpm) / Math.max(trpm, targetRpm)).toFixed(
+    Math.abs(1 - Math.min(rpm, targetRpm) / Math.max(rpm, targetRpm)).toFixed(
       2
     );
 }, 100);
 
 function start() {
-  document
-    .getElementsByClassName("record-container")[0]
-    .classList.add("animated");
   if (window.DeviceOrientationEvent) {
-    if (typeof DeviceMotionEvent.requestPermission === "function") {
-      DeviceMotionEvent.requestPermission();
-    }
-    setTimeout(() => {
-      window.addEventListener("devicemotion", onDeviceMotion);
-    }, 1000);
+    (typeof DeviceMotionEvent.requestPermission === "function"
+      ? DeviceMotionEvent.requestPermission()
+      : Promise.resolve()
+    ).then(() => {
+      document
+        .getElementsByClassName("record-container")[0]
+        .classList.add("animated");
+      running = true;
+      setTimeout(() => {
+        window.addEventListener("devicemotion", onDeviceMotion);
+      }, 1000);
+    });
   } else {
     document.getElementById("orientation").innerHTML = "Not supported";
   }
@@ -56,7 +60,17 @@ function finish() {
   window.removeEventListener("devicemotion", onDeviceMotion);
   samples = 0;
   meanRotation = 0;
+  running = false;
 }
 
-document.getElementById("start").addEventListener("click", start);
-document.getElementById("finish").addEventListener("click", finish);
+document.getElementById("record").addEventListener("click", () => {
+  running ? finish() : start();
+});
+
+document.getElementById("mode").addEventListener("click", () => {
+  const isDarkMode =
+    getComputedStyle(document.body).backgroundColor === "rgb(0, 0, 0)";
+  document.body.classList.remove("lightmode");
+  document.body.classList.remove("darkmode");
+  document.body.classList.add(isDarkMode ? "lightmode" : "darkmode");
+});
