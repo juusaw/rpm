@@ -49,7 +49,7 @@ function start() {
       }, 1000);
     });
   } else {
-    document.getElementById("orientation").innerHTML = "Not supported";
+    document.getElementById("rpm").innerHTML = "Not supported";
   }
 }
 
