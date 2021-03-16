@@ -1,3 +1,21 @@
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-partial {
+  100% {
+    -webkit-transform: rotate(3deg);
+    transform: rotate(3deg);
+  }
+}
+
 body {
   background-color: #fff;
   font-family: "Poppins", sans-serif;
@@ -9,12 +27,26 @@ body {
 
 .animated .record {
   animation: spin-partial 0.5s ease-in-out infinite alternate;
-  /* MoveUpDown 0.75s ease-in infinite; */
+}
+
+.animated.accelerating .record-center,
+.animated.accelerating .record-grain {
+  animation-name: spin;
+  animation-duration: 2s;
+  animation-timing-function: ease-in;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 .animated .record-center,
 .animated .record-grain {
-  animation: spin 2s ease-in 1, spin 1.5s linear 2s infinite;
+  animation-name: spin;
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
+  animation-delay: 2s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
 }
 
 .record-container {
@@ -22,8 +54,8 @@ body {
   overflow: hidden;
 
   position: absolute;
-  top: 50%; /* position the top  edge of the element at the middle of the parent */
-  left: 50%; /* position the left edge of the element at the middle of the parent */
+  top: 50%;
+  left: 50%;
 
   transform: translate(-50%, -50%);
 }
@@ -71,18 +103,6 @@ body {
 .record-center::after {
   content: " RPM test \A 33⅓";
 }
-@keyframes spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes spin-partial {
-  100% {
-    transform: rotate(3deg);
-  }
-}
 
 .record {
   font-size: 8px;
@@ -94,18 +114,6 @@ body {
 .record {
   left: 0;
   bottom: 0;
-}
-
-@keyframes MoveUpDown {
-  0%,
-  100% {
-    bottom: 0;
-    left: 0px;
-  }
-  50% {
-    bottom: 1px;
-    left: 1px;
-  }
 }
 
 section h1 {

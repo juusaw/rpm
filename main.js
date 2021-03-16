@@ -42,13 +42,27 @@ function start() {
     ).then(() => {
       document
         .getElementsByClassName("record-container")[0]
-        .classList.add("animated");
+        .classList.add("animated", "accelerating");
       running = true;
       setTimeout(() => {
         window.addEventListener("devicemotion", onDeviceMotion);
       }, 1000);
+      setTimeout(() =>
+        document.getElementsByClassName("record-container")[0]
+          .classList.remove("accelerating"),
+      2000);
+
     });
   } else {
+    document
+      .getElementsByClassName("record-container")[0]
+      .classList.add("animated", "accelerating");
+    running = true;
+    setTimeout(() =>
+      document.getElementsByClassName("record-container")[0]
+        .classList.remove("accelerating"),
+      2000);
+
     document.getElementById("rpm").innerHTML = "Not supported";
   }
 }
