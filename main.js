@@ -18,53 +18,54 @@ let samples = 0,
 
 const onDeviceMotion = throttleFunction((evt) => {
   meanRotation =
-    (meanRotation * samples +
-      evt.rotationRate
-        .gamma) /* +
-        evt.rotationRate.alpha +
-        evt.rotationRate.beta*/ /
-    (samples + 1);
+    (meanRotation * samples + evt.rotationRate.gamma) / (samples + 1);
   const rpm = Math.abs(meanRotation) / (2 * Math.PI);
-  samples++;
-  document.getElementById("rpm").innerHTML = rpm.toFixed(2);
-  document.getElementById("deviation").innerHTML =
-    100 *
+  const deviation =
     Math.abs(1 - Math.min(rpm, targetRpm) / Math.max(rpm, targetRpm)).toFixed(
       2
-    );
+    ) * 100;
+  samples++;
+  document.getElementById("rpm").innerHTML = rpm.toFixed(2);
+  document.getElementById("deviation").innerHTML = deviation;
 }, 100);
 
-function start() {
+function checkSupportAndPermissions() {
   if (window.DeviceOrientationEvent) {
-    (typeof DeviceMotionEvent.requestPermission === "function"
+    return typeof DeviceMotionEvent.requestPermission === "function"
       ? DeviceMotionEvent.requestPermission()
-      : Promise.resolve()
-    ).then(() => {
+      : Promise.resolve();
+  } else {
+    return Promise.reject("Not supported");
+  }
+}
+
+function animateStart() {
+  document
+    .getElementsByClassName("record-container")[0]
+    .classList.add("animated", "accelerating");
+  setTimeout(
+    () =>
       document
         .getElementsByClassName("record-container")[0]
-        .classList.add("animated", "accelerating");
+        .classList.remove("accelerating"),
+    2000
+  );
+}
+
+function start() {
+  return checkSupportAndPermissions()
+    .then(() => {
       running = true;
+      animateStart();
       setTimeout(() => {
         window.addEventListener("devicemotion", onDeviceMotion);
       }, 1000);
-      setTimeout(() =>
-        document.getElementsByClassName("record-container")[0]
-          .classList.remove("accelerating"),
-      2000);
-
+    })
+    .catch(() => {
+      running = true;
+      animateStart();
+      document.getElementById("rpm").innerHTML = "Not supported";
     });
-  } else {
-    document
-      .getElementsByClassName("record-container")[0]
-      .classList.add("animated", "accelerating");
-    running = true;
-    setTimeout(() =>
-      document.getElementsByClassName("record-container")[0]
-        .classList.remove("accelerating"),
-      2000);
-
-    document.getElementById("rpm").innerHTML = "Not supported";
-  }
 }
 
 function finish() {
